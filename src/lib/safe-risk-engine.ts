@@ -418,23 +418,36 @@ export function buildBrief(
   ];
   sections.push({ heading: "Portfolio Summary", lines: portfolio });
 
-  // Highest-risk campaign
-  const top = list.find((c) => c.risk_level !== null) ?? null;
-  if (top && top.flag_names.length > 0) {
-    sections.push({
-      heading: "Highest-Risk Campaign",
-      lines: [
-        `${top.advertiser ?? top.campaign_id} (${top.campaign_id}${
-          top.channel ? `, ${top.channel}` : ""
-        })`,
-        `Risk score ${top.risk_score}${top.risk_partial ? " (partial data)" : ""} — flagged for ${joinList(
-          top.flag_names,
-        )}.`,
-        top.invoice_gap !== null && top.invoice_gap > 0
-          ? `Invoice gap of ${fmtUSDSigned(top.invoice_gap)} is recoverable revenue.`
-          : `Recommended action: ${top.recommended_action}`,
-      ],
-    });
+  // Highest-priority flagged campaign. `list` is sorted by risk score desc
+  // (then invoice gap), so the first flagged row is the highest-priority one —
+  // independent of whether the single top-scored row happened to fire a flag.
+  const flaggedTop = list.find((c) => c.flag_names.length > 0) ?? null;
+  if (flaggedTop) {
+    const detailLines = [
+      `${flaggedTop.advertiser ?? flaggedTop.campaign_id} (${flaggedTop.campaign_id}${
+        flaggedTop.channel ? `, ${flaggedTop.channel}` : ""
+      })`,
+      `Risk score ${flaggedTop.risk_score}${
+        flaggedTop.risk_partial ? " (partial data)" : ""
+      } — flagged for ${joinList(flaggedTop.flag_names)}.`,
+      flaggedTop.invoice_gap !== null && flaggedTop.invoice_gap > 0
+        ? `Invoice gap of ${fmtUSDSigned(flaggedTop.invoice_gap)} is recoverable revenue.`
+        : `Recommended action: ${flaggedTop.recommended_action}`,
+    ];
+    if (kpis.highRiskCampaigns > 0) {
+      sections.push({ heading: "Highest-Risk Campaign", lines: detailLines });
+    } else {
+      const n = kpis.flaggedCampaigns;
+      sections.push({
+        heading: "Highest-Priority Flagged Campaign",
+        lines: [
+          `No high-risk campaigns; ${n} medium-risk campaign${
+            n === 1 ? "" : "s"
+          } require${n === 1 ? "s" : ""} review.`,
+          ...detailLines,
+        ],
+      });
+    }
   } else {
     sections.push({
       heading: "Highest-Risk Campaign",

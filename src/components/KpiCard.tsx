@@ -6,11 +6,18 @@ interface KpiCardProps {
   tone?: "neutral" | "positive" | "warning" | "critical";
 }
 
-const toneStyles: Record<NonNullable<KpiCardProps["tone"]>, string> = {
-  neutral: "text-slate-900",
-  positive: "text-emerald-600",
-  warning: "text-amber-600",
-  critical: "text-rose-600",
+const valueTone: Record<NonNullable<KpiCardProps["tone"]>, string> = {
+  neutral: "text-ink",
+  positive: "text-sage",
+  warning: "text-warn",
+  critical: "text-danger",
+};
+
+const subTone: Record<NonNullable<KpiCardProps["tone"]>, string> = {
+  neutral: "text-muted",
+  positive: "text-sage",
+  warning: "text-warn",
+  critical: "text-danger",
 };
 
 export default function KpiCard({
@@ -20,16 +27,12 @@ export default function KpiCard({
   tone = "neutral",
 }: KpiCardProps) {
   return (
-    <div className="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
-        {label}
-      </p>
-      <p
-        className={`mt-3 text-2xl font-semibold tabular-nums ${toneStyles[tone]}`}
-      >
+    <div className="rounded-xl border border-line bg-card px-4 py-3.5">
+      <p className="text-xs font-medium text-muted">{label}</p>
+      <p className={`mt-2 text-xl font-semibold tabular-nums ${valueTone[tone]}`}>
         {value}
       </p>
-      {sub ? <p className="mt-1 text-xs text-slate-400">{sub}</p> : null}
+      {sub ? <p className={`mt-1 text-[11px] ${subTone[tone]}`}>{sub}</p> : null}
     </div>
   );
 }

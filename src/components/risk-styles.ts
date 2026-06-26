@@ -2,20 +2,20 @@ import type { RiskLevel } from "@/lib/risk-engine";
 
 /** Shared, color-coded styling for risk levels across table and detail panel. */
 export const riskLevelBadge: Record<RiskLevel, string> = {
-  High: "bg-rose-100 text-rose-700 ring-rose-200",
-  Medium: "bg-amber-100 text-amber-700 ring-amber-200",
-  Low: "bg-emerald-100 text-emerald-700 ring-emerald-200",
+  High: "bg-danger-bg text-danger ring-danger-line",
+  Medium: "bg-warn-bg text-warn ring-warn-line",
+  Low: "bg-sage-tint text-sage-deep ring-sage-line",
 };
 
 export const riskLevelDot: Record<RiskLevel, string> = {
-  High: "bg-rose-500",
-  Medium: "bg-amber-500",
-  Low: "bg-emerald-500",
+  High: "bg-danger",
+  Medium: "bg-warn",
+  Low: "bg-sage",
 };
 
 /** Score band coloring for the numeric risk score. */
 export function riskScoreTone(score: number): string {
-  if (score >= 45) return "text-rose-600";
-  if (score >= 25) return "text-amber-600";
-  return "text-slate-500";
+  if (score >= 45) return "text-danger";
+  if (score >= 25) return "text-warn";
+  return "text-muted";
 }

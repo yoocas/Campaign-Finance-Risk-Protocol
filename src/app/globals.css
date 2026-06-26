@@ -1,10 +1,54 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-jakarta);
+  --font-serif: var(--font-fraunces);
   --font-mono: var(--font-geist-mono);
 }
 
+/*
+ * Warm "spreadsheet-clean" enterprise-finance palette.
+ * Cream backgrounds, ivory cards, soft warm borders, sage-green accents,
+ * muted amber/rose for warnings and risk. Tailwind v4 turns each --color-*
+ * token into bg-/text-/border-/ring-/fill- utilities (with /opacity support).
+ *
+ * NOTE: changing tokens in an @theme block does NOT hot-reload under Turbopack —
+ * restart `next dev` after editing these.
+ */
+@theme {
+  --color-cream: #ece3d0; /* app workspace background */
+  --color-ivory: #f6efe1; /* header + rail surfaces */
+  --color-card: #fffdf7; /* card surfaces */
+  --color-card-alt: #f1e9d8; /* table header / inset rows */
+
+  --color-line: #ddd3bd; /* primary borders */
+  --color-line-soft: #e8e0cd; /* hairline dividers */
+
+  --color-ink: #2c2820; /* headings */
+  --color-ink-soft: #524b3e; /* body text */
+  --color-muted: #8a8170; /* labels / secondary */
+  --color-faint: #b2a892; /* placeholder / tertiary */
+
+  --color-sage: #5d7a4d; /* primary action */
+  --color-sage-dark: #4a6440; /* hover */
+  --color-sage-deep: #3a5132; /* text on tint */
+  --color-sage-tint: #e3ecd8; /* active rail / available badges */
+  --color-sage-line: #c3d3b3; /* sage borders */
+
+  --color-warn: #936118; /* amber warning text */
+  --color-warn-bg: #f5e9cd; /* amber warning surface */
+  --color-warn-line: #e3cf9f; /* amber warning border */
+
+  --color-danger: #a0443a; /* high risk / error text */
+  --color-danger-bg: #f2d8d1; /* error surface */
+  --color-danger-line: #e0b8af; /* error border */
+}
+
+html {
+  /* Global down-scale: every rem-based size/spacing shrinks with this. */
+  font-size: 14px;
+}
+
 body {
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), Arial, Helvetica, sans-serif;
 }
