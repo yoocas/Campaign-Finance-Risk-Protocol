@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { Check, UploadCloud } from "lucide-react";
+import { Check, HelpCircle, UploadCloud } from "lucide-react";
 import {
   parseCsv,
   parseText,
@@ -9,6 +9,7 @@ import {
   type ParsedData,
 } from "@/lib/import-parser";
 import StepHeader from "./StepHeader";
+import DataRequirementsModal from "./DataRequirementsModal";
 
 interface InputStepProps {
   onLoad: (data: ParsedData) => void;
@@ -30,6 +31,7 @@ export default function InputStep({ onLoad }: InputStepProps) {
   const [tab, setTab] = useState<Tab>("sample");
   const [text, setText] = useState("");
   const [preview, setPreview] = useState<ParsedData | null>(null);
+  const [schemaOpen, setSchemaOpen] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const hasRows = preview !== null && preview.rowCount > 0;
@@ -65,21 +67,31 @@ export default function InputStep({ onLoad }: InputStepProps) {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
         {/* Left: source tabs + content + preview */}
         <div className="space-y-5">
-          <div className="inline-flex rounded-xl border border-line bg-card-alt p-1">
-            {TABS.map((t) => (
-              <button
-                key={t.id}
-                type="button"
-                onClick={() => setTab(t.id)}
-                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                  tab === t.id
-                    ? "bg-card text-ink shadow-sm"
-                    : "text-muted hover:text-ink-soft"
-                }`}
-              >
-                {t.label}
-              </button>
-            ))}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="inline-flex rounded-xl border border-line bg-card-alt p-1">
+              {TABS.map((t) => (
+                <button
+                  key={t.id}
+                  type="button"
+                  onClick={() => setTab(t.id)}
+                  className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
+                    tab === t.id
+                      ? "bg-card text-ink shadow-sm"
+                      : "text-muted hover:text-ink-soft"
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+            <button
+              type="button"
+              onClick={() => setSchemaOpen(true)}
+              className="inline-flex items-center gap-2 rounded-lg border border-line bg-card px-3.5 py-2 text-sm font-medium text-ink-soft transition-colors hover:border-sage hover:bg-sage-tint/40"
+            >
+              <HelpCircle size={16} className="text-sage" aria-hidden />
+              What data do I need?
+            </button>
           </div>
 
           {tab === "paste" && (
@@ -225,6 +237,11 @@ export default function InputStep({ onLoad }: InputStepProps) {
           </section>
         </div>
       </div>
+
+      <DataRequirementsModal
+        open={schemaOpen}
+        onClose={() => setSchemaOpen(false)}
+      />
     </div>
   );
 }

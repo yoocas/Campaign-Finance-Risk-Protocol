@@ -20,7 +20,7 @@ export default function TopHeader({ onLoadSample, onStartOver }: TopHeaderProps)
         </span>
         <div>
           <h1 className="font-serif text-base font-semibold leading-tight tracking-tight text-ink">
-            Campaign Finance Risk Copilot
+            Campaign Finance Risk Protocol
           </h1>
           <p className="text-xs text-muted">Mock adtech finance workflow</p>
         </div>
@@ -49,7 +49,7 @@ export default function TopHeader({ onLoadSample, onStartOver }: TopHeaderProps)
           className="flex h-9 w-9 items-center justify-center rounded-full bg-sage-tint text-xs font-semibold text-sage-deep"
           aria-hidden
         >
-          AR
+          LY
         </span>
       </div>
     </header>

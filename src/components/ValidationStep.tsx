@@ -108,7 +108,15 @@ export default function ValidationStep({
         <section className="rounded-xl border border-line bg-card p-5">
           <h3 className="text-sm font-semibold text-ink">Analysis sufficiency matrix</h3>
           <p className="mt-0.5 text-xs text-muted">
-            What each analysis can be computed from the provided data
+            These are analysis-readiness checks, not separate clickable reports.
+          </p>
+          <p className="mt-2 text-[11px] leading-relaxed text-muted">
+            <span className="font-medium text-ink-soft">Available</span> means
+            the uploaded data supports this analysis.{" "}
+            <span className="font-medium text-ink-soft">Partial</span> means only
+            some rows can be analyzed.{" "}
+            <span className="font-medium text-ink-soft">Unavailable</span> means
+            required fields are missing.
           </p>
 
           <div className="mt-4 space-y-4">

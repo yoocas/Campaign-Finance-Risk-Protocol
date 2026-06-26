@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Campaign Finance Risk Copilot",
+  title: "Campaign Finance Risk Protocol",
   description:
     "Mock adtech revenue leakage, margin risk, and billing discrepancy workflow.",
 };
